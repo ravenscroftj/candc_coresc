@@ -24,4 +24,7 @@ RUN apt update \
 
 EXPOSE 9004
 
+HEALTHCHECK --interval=30s --retries=3 --start-period=5s \
+  CMD wget http://localhost:9004/ ; [ $? -eq 8 ] || echo "fail"
+
 ENTRYPOINT cd /app/candc-1.00/bin && ./run_server.sh
